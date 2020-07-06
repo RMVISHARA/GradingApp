@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/custom.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="col-md-8 offset-md-2">
+        <h1 class="my-5 text-center">GRADE ME</h1>
+        <div class="cust-btn-wrap text-center">
+          <button
+            class="btn btn-primary text-center w-100"
+            onclick="window.location.href='assignment.html';"
+          >
+            TAKE THE TEST
+          </button>
+        </div>
+      </div>
+      <div class="col-md-8 offset-md-2 my-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              id="home-tab"
+              data-toggle="tab"
+              href="#home"
+              role="tab"
+              aria-controls="home"
+              aria-selected="true"
+              >Teacher View</a
+            >
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="profile-tab"
+              data-toggle="tab"
+              href="#profile"
+              role="tab"
+              aria-controls="profile"
+              aria-selected="false"
+              >Student View</a
+            >
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div class="row no-gutters my-3">
+              <div class="col-md-12">
+                <h4>Course Details</h4>
+                <div class="row course-details-topics">
+                  <div class="col-md-2 topic">Name</div>
+                  <div class="col-md-2 topic">Grade - A</div>
+                  <div class="col-md-2 topic">Grade - B</div>
+                  <div class="col-md-2 topic">Grade - C</div>
+                  <div class="col-md-2 topic">Grade - S</div>
+                  <div class="col-md-2 topic">Pass Mark</div>
+                </div>
+                <div
+                  class="row course-details-topics"
+                  v-for="course in courseDetails"
+                >
+                  <div class="col-md-2 topic">{{ course.name }}</div>
+                  <div class="col-md-2 topic">
+                    {{ course.grade_details_01 }}
+                  </div>
+                  <div class="col-md-2 topic">
+                    {{ course.grade_details_02 }}
+                  </div>
+                  <div class="col-md-2 topic">
+                    {{ course.grade_details_03 }}
+                  </div>
+                  <div class="col-md-2 topic">
+                    {{ course.grade_details_04 }}
+                  </div>
+                  <div class="col-md-2 topic">
+                    {{ course.pass_mark }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row no-gutters my-3">
+              <div class="col-md-12">
+                <h4>Questions Statistics</h4>
+
+                <div v-for="question in questionDetails" class="mt-3">
+                  <h6>{{ question.name }}</h6>
+                  <div class="row course-details-topics">
+                    <div class="col-md-4 topic">Question</div>
+                    <div class="col-md-3 topic">No of correct answers</div>
+                    <div class="col-md-3 topic">No of incorrect answers</div>
+                    <div class="col-md-2 topic">Average time spent</div>
+                  </div>
+                  <div
+                    class="row course-details-topics stats"
+                    v-for="q in question.questions"
+                  >
+                    <div class="col-md-4 topic text-left">
+                      {{ q.question }} ?
+                    </div>
+                    <div class="col-md-3 topic">
+                      {{ q.correct }}
+                    </div>
+                    <div class="col-md-3 topic">
+                      {{ q.incorrect }}
+                    </div>
+                    <div class="col-md-2 topic">
+                      {{ q.average_time.toFixed(2) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="profile"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+          >
+            <div class="row my-3">
+              <div class="col-md-12">
+                <h4>Results</h4>
+                <div class="row course-details-topics">
+                  <div class="w-100">
+                    <div class="row">
+                      <div class="col-md-2 topic">Name</div>
+                      <div class="col-md-4 topic">Assignment Name</div>
+                      <div class="col-md-3 topic">Marks</div>
+                      <div class="col-md-3 topic">Review</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row course-details-topics"
+                  v-for="result in results"
+                >
+                  <div v-for="assignment in result.assignments" class="w-100">
+                    <div class="row align-items-center">
+                      <div class="col-md-2 topic">
+                        {{ result.name }}
+                      </div>
+                      <div class="col-md-4 topic">
+                        {{ assignment.name }}
+                      </div>
+                      <div class="col-md-3 topic">
+                        {{ assignment.marks }}
+                      </div>
+                      <div class="col-md-3 topic">
+                        <div class="next-btn text-center">
+                          <button
+                            class="btn btn-success px-3 py-1"
+                            @click="showDetails(result.id, assignment.id)"
+                          >
+                            REVIEW
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="row no-gutters custom-modal py-3 answers-check"
+        v-if="showBackground"
+      >
+        <div class="col-md-2 side-bars" @click="hideModalWindow"></div>
+        <transition
+          name="fade"
+          enter-active-class="animate__animated animate__fadeInUp"
+          leave-active-class="animate__animated animate__fadeOutDown"
+        >
+          <div class="col-md-8 body-content" v-if="showModal">
+            <span class="close" @click="hideModalWindow"
+              ><img src="images/close.png" alt="close-img" />
+            </span>
+            <div class="col-md-12 questions-wrap">
+              <h2 class="questions-title text-center my-3">Questions</h2>
+              <div class="row no-gutters my-3">
+                <div class="col-md-4 color-description text-center">
+                  <div class="d-flex fit-content">
+                    <div class="color"></div>
+                    <div class="description">
+                      Correct Answer
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 color-description text-center">
+                  <div class="d-flex fit-content">
+                    <div class="color"></div>
+                    <div class="description">
+                      Your Answer
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 color-description text-center">
+                  <div class="d-flex fit-content">
+                    <div class="color"></div>
+                    <div class="description">
+                      Correct & your answer
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                v-if="currentAssignmentQuestions"
+                class="card question mb-2"
+                v-for="single in currentAssignmentQuestions"
+              >
+                <div class="card-body py-4">
+                  <h6 class="question mb-3">{{single.question}} ?</h6>
+                  <div class="answers mb-3">
+                    <div
+                      class="custom-control custom-radio"
+                      :class="handleClass(single.correct_answer, single.answer_01, single.answer)"
+                    >
+                      <input
+                        hidden
+                        disabled
+                        type="radio"
+                        id="customRadio1"
+                        name="customRadio"
+                        class="custom-control-input"
+                        :value="single.answer_01"
+                      />
+                      <label class="custom-control-label" for="customRadio1"
+                        >{{single.answer_01}}</label
+                      >
+                    </div>
+                    <div
+                      class="custom-control custom-radio"
+                      :class="handleClass(single.correct_answer, single.answer_02, single.answer)"
+                    >
+                      <input
+                        hidden
+                        disabled
+                        checked="checked"
+                        type="radio"
+                        id="customRadio2"
+                        name="customRadio"
+                        class="custom-control-input"
+                        :value="single.answer_02"
+                        checked="checked"
+                      />
+                      <label class="custom-control-label" for="customRadio2"
+                        >{{single.answer_02}}</label
+                      >
+                    </div>
+                    <div
+                      class="custom-control custom-radio"
+                      :class="handleClass(single.correct_answer, single.answer_03, single.answer)"
+                    >
+                      <input
+                        hidden
+                        disabled
+                        type="radio"
+                        id="customRadio3"
+                        name="customRadio"
+                        class="custom-control-input"
+                        :value="single.answer_03"
+                      />
+                      <label class="custom-control-label" for="customRadio3"
+                        >{{single.answer_03}}</label
+                      >
+                    </div>
+                    <div
+                      class="custom-control custom-radio"
+                      :class="handleClass(single.correct_answer, single.answer_04, single.answer)"
+                    >
+                      <input
+                        hidden
+                        disabled
+                        type="radio"
+                        id="customRadio4"
+                        name="customRadio"
+                        class="custom-control-input"
+                        :value="single.answer_04"
+                      />
+                      <label class="custom-control-label" for="customRadio4"
+                        >{{single.answer_04}}</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+        <div class="col-md-2 side-bars" @click="hideModalWindow"></div>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  var app = new Vue({
+    el: "#app",
+    data() {
+      return {
+        courseDetails: [],
+        questionDetails: [],
+        results: [],
+        showModal: false,
+        showBackground: false,
+        currentAssignmentQuestions: [],
+      };
+    },
+    mounted() {
+      axios
+        .get("http://127.0.0.1:5000/teacher/details")
+        .then((res) => (this.courseDetails = res.data));
+      axios.get("http://127.0.0.1:5000/teacher/statistics").then((res) => {
+        this.questionDetails = res.data;
+        axios.get("http://127.0.0.1:5000/student/results").then((res) => {
+          this.results = res.data;
+          console.log(res.data);
+          console.log(this.results[0]);
+          console.log(this.results[0].assignments[0]);
+        });
+      });
+    },
+    methods: {
+      showModalWindow() {
+        this.showBackground = true;
+        setTimeout(() => {
+          this.showModal = true;
+        }, 200);
+      },
+
+      hideModalWindow() {
+        this.showModal = false;
+        setTimeout(() => {
+          this.showBackground = false;
+        }, 200);
+      },
+      showDetails(studentId, assignmentId) {
+        axios
+          .get(
+            `http://127.0.0.1:5000/student/review/${studentId}/${assignmentId}`
+          )
+          .then((res) => {
+            this.currentAssignmentQuestions = res.data;
+            console.log(res.data);
+            this.showModalWindow();
+          });
+      },
+      handleClass(correct_answer, answer_single, answer) {
+        if (answer === correct_answer && answer_single === correct_answer)
+          return "correct-n-student";
+        if (answer_single === correct_answer && answer_single !== answer)
+          return "correct-answer";
+        if (answer_single === answer && answer_single !== correct_answer)
+          return "student-answer";
+      },
+    },
+  });
+</script>

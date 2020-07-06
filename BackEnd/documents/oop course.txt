@@ -1,0 +1,71 @@
+This set of Object Oriented Programming Multiple Choice Questions & Answers focuses on “Private Member Functions”.
+
+1. Which is private member functions access scope?
+a) Member functions which can only be used within the class
+b) Member functions which can used outside the class
+c) Member functions which are accessible in derived class
+d) Member functions which can’t be accessed inside the class
+View Answer
+Answer: a
+Explanation: The member functions can be accessed inside the class only if they are private. The access is scope is limited to ensure the security of the private members and their usage.
+
+2. Which among the following is true?
+a) The private members can’t be accessed by public members of the class
+b) The private members can be accessed by public members of the class
+c) The private members can be accessed only by the private members of the class
+d) The private members can’t be accessed by the protected members of the class
+View Answer
+Answer: b
+Explanation: The private members are accessible within the class. There is no restriction on use of private members by public or protected members. All the members can access the private member functions of the class.
+
+3. Which member can never be accessed by inherited classes?
+a) Private member function
+b) Public member function
+c) Protected member function
+d) All can be accessed
+View Answer
+Answer: a
+Explanation: The private member functions can never be accessed in the derived classes. The access specifiers is of maximum security that allows only the members of self class to access the private member functions.
+
+4. Which syntax among the following shows that a member is private in a class?
+a) private: functionName(parameters)
+b) private(functionName(parameters))
+c) private functionName(parameters)
+d) private::functionName(parameters)
+Answer: c
+Explanation: The function declaration must contain private keyword follower by the return type and function name. Private keyword is followed by normal function declaration.
+
+
+5. If private member functions are to be declared in C++ then _____________
+a) private: <all private members>
+b) private <member name>
+c) private(private member list)
+d) private :- <private members>
+View Answer
+Answer: a
+Explanation: The private members doesn’t have to have the keyword with each private member. We only have to specify the keyword private followed by single colon and then private member’s are listed.
+
+6. In java, which rule must be followed?
+a) Keyword private preceding list of private member’s
+b) Keyword private with a colon before list of private member’s
+c) Keyword private with arrow before each private member
+d) Keyword private preceding each private member
+View Answer
+Answer: d
+Explanation: The private keyword must be mentioned before each private member. Unlike the rule in C++ to specify private once and list all other private member’s, in java all member declarations must be preceded by the keyword private.
+
+7. How many private member functions are allowed in a class?
+a) Only 1
+b) Only 7
+c) Only 255
+d) As many as required
+Answer: d
+Explanation: There are no conditions applied on the number of private member functions that can be declared in a class. Though the system may restrict use of too many functions depending on memory.
+
+8. How to access a private member function of a class?
+a) Using object of class
+b) Using object pointer
+c) Using address of member function
+d) Using class address
+Answer: c
+Explanation: Even the private member functions can be called outside the class. This is possible if address of the function is known. We can use the address to call the function outside the class.

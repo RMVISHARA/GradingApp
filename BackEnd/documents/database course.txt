@@ -1,0 +1,40 @@
+Q.	
+What do you mean by one to many relationship between Teacher and Class table?
+A.One class may have many teachersB.One teacher can have many classes
+C.Many classes may have many teachersD.Many teachers may have many classes
+Answer : One teacher can have many classes [Option : B]
+
+
+Show Answer
+Q.	
+What are the different view to present a Table ?
+A.Datasheet ViewB.Design View
+C.Pivote TableViewD.All Of Above
+Answer : All Of Above [Option : D]
+
+
+Show Answer
+Q.	
+In one-to-many relationship the table on 'many' side is called _______
+A.ParentB.Child
+C.SisterD.Master
+Answer : Child [Option : B]
+
+
+Show Answer
+Q.	
+In which state one gathers and list all the necessary fields for the database design project.
+A.Data DefinitionB.Data Refinement
+C.Establishing RelationshipD.None Of The Above
+Answer : Data Definition [Option : A]
+
+
+Show Answer
+Q.	
+Which of the following enables us to view data from a table based on a specific criterion
+A.FormB.Query
+C.MacroD.Report
+Answer : Query [Option : B]
+
+
+Show Answer

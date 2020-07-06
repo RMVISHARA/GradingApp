@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/custom.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="col-md-8 offset-md-2">
+        <h2 class="questions-title text-center my-5">Select Course</h2>
+
+        <div class="student-info">
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter Name"
+              v-model="studentInfo.name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Select course</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect1"
+              v-model="studentInfo.assignment_id"
+            >
+              <option disabled>select course</option>
+              <option
+                v-for="course in courses"
+                :key="course.id"
+                :value="course.id"
+                >{{course.name}}</option
+              >
+            </select>
+          </div>
+
+          <div class="text-center">
+            <button @click="saveData(studentInfo)" class="btn btn-primary px-5">
+              BEGIN
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 offset-md-2 questions-wrap" v-if="showQuestions">
+        <h2 class="questions-title text-center my-5">Questions</h2>
+
+        <div class="card question" v-if="!questionaireDone">
+          <div class="card-body py-4">
+            <h6 class="question mb-3">{{currQuestion.question}} ?</h6>
+            <div class="answers mb-3">
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  id="customRadio1"
+                  name="customRadio"
+                  class="custom-control-input"
+                  :value="currQuestion.answer_01"
+                  v-model="answer"
+                />
+                <label class="custom-control-label" for="customRadio1"
+                  >{{currQuestion.answer_01}}</label
+                >
+              </div>
+              <div class="custom-control custom-radio">
+                <input
+                  checked="checked"
+                  type="radio"
+                  id="customRadio2"
+                  name="customRadio"
+                  class="custom-control-input"
+                  :value="currQuestion.answer_02"
+                  v-model="answer"
+                />
+                <label class="custom-control-label" for="customRadio2"
+                  >{{currQuestion.answer_02}}</label
+                >
+              </div>
+              <div class="custom-control custom-radio">
+                <input
+                  active
+                  type="radio"
+                  id="customRadio3"
+                  name="customRadio"
+                  class="custom-control-input"
+                  :value="currQuestion.answer_03"
+                  v-model="answer"
+                />
+                <label class="custom-control-label" for="customRadio3"
+                  >{{currQuestion.answer_03}}</label
+                >
+              </div>
+              <div class="custom-control custom-radio">
+                <input
+                  type="radio"
+                  id="customRadio4"
+                  name="customRadio"
+                  class="custom-control-input"
+                  :value="currQuestion.answer_04"
+                  v-model="answer"
+                />
+                <label class="custom-control-label" for="customRadio4"
+                  >{{currQuestion.answer_04}}</label
+                >
+              </div>
+            </div>
+            <div class="next-btn text-right">
+              <button class="btn btn-success px-5" @click="nextQuestion()">
+                NEXT
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card question" v-else>
+          <div class="card-body py-4">
+            <h5>Thank you for answering the questions!</h5>
+            <div class="next-btn text-right">
+              <button class="btn btn-success px-5" @click="sendTime">
+                FINISH
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  var app = new Vue({
+    el: "#app",
+
+    data() {
+      return {
+        courses: [],
+        studentInfo: {
+          assignment_id: "select course",
+          name: "",
+          studentId: "",
+        },
+        questions: [],
+        showQuestions: false,
+        currQuestion: {},
+        counter: 0,
+        answer: null,
+        questionaireDone: false,
+        saveTime: [],
+        singleTime: {
+          studentId: null,
+          assignmentId: null,
+          timeQuestions: [],
+        },
+        timeSpent: [],
+      };
+    },
+    mounted() {
+      axios.get("http://127.0.0.1:5000/teacher/details").then((res) => {
+        this.courses = res.data;
+        console.log(this.courses);
+      });
+    },
+    methods: {
+      saveData(studentInfo) {
+        axios
+          .post("http://127.0.0.1:5000/addStudent/", studentInfo)
+          .then((res) => {
+            console.log(res);
+            studentInfo.studentId = res.data;
+            axios
+              .get(
+                `http://127.0.0.1:5000/question/assignment/${studentInfo.assignment_id}`
+              )
+              .then((res) => {
+                this.singleTime = {
+                  studentId: studentInfo.studentId,
+                  assignmentId: studentInfo.assignment_id,
+                  timeQuestions: [],
+                };
+                console.log(this.singleTime, "Single time");
+                const firstDT = this.getDateTime();
+                this.timeSpent.push(firstDT);
+                this.questions = res.data;
+                this.currQuestion = this.questions[this.counter];
+                this.saveTime.push({
+                  questionId: this.currQuestion.id,
+                  timeSpent: 0,
+                });
+                this.showQuestions = true;
+              });
+          });
+      },
+      nextQuestion() {
+        if (this.answer === null) return alert("Please answer the question!");
+        const questionId = this.currQuestion.id;
+        let marks = 0;
+        if (this.answer === this.currQuestion.correct_answer) {
+          marks = this.currQuestion.marks;
+        }
+        this.counter++;
+        this.currQuestion = this.questions[this.counter];
+        if (this.questions.length !== this.counter) {
+          const restDT = this.getDateTime();
+          this.timeSpent.push(restDT);
+          this.saveTime.push({
+            questionId: this.currQuestion.id,
+            timeSpent: 0,
+          });
+          console.log("------------Save Time------------");
+          console.log(this.saveTime);
+          console.log("------------Save Time------------");
+          console.log(this.counter);
+          console.log(this.questions.length);
+        }
+        if (this.questions.length === this.counter) {
+          this.questionaireDone = true;
+          this.counter = 0;
+        }
+
+        const questionDetails = {
+          studentId: this.studentInfo.studentId,
+          timeSpent: 0,
+          answer: this.answer,
+          marks: marks,
+          assignmentId: this.studentInfo.assignment_id,
+        };
+        console.log(questionDetails);
+        console.log(questionId);
+        axios
+          .post(
+            `http://127.0.0.1:5000/question/answer/${questionId}`,
+            questionDetails
+          )
+          .then((res) => console.log(res.data));
+        this.answer = null;
+      },
+      getDateTime() {
+        const date = new Date();
+        return date;
+      },
+
+      sendTime() {
+        const lastDT = this.getDateTime();
+        this.timeSpent.push(lastDT);
+        console.log(this.timeSpent);
+        let diffSet = [];
+        for (i = 0; i < this.timeSpent.length; i++) {
+          console.log(this.timeSpent[i + 1], this.timeSpent[i]);
+          let diff = this.timeSpent[i + 1] - this.timeSpent[i];
+          diffSet.push(diff / 1000);
+        }
+        console.log(diffSet);
+        let filteredTimes = diffSet.filter((single) => single);
+        console.log(filteredTimes);
+        console.log(this.saveTime);
+
+        let finalList = [];
+
+        this.saveTime.forEach((single, index) => {
+          single.timeSpent = filteredTimes[index];
+          finalList.push(single);
+        });
+        console.log(finalList);
+        this.singleTime.timeQuestions = finalList;
+        console.log(this.singleTime);
+        axios
+          .post("http://127.0.0.1:5000/question/timeSpent", this.singleTime)
+          .then((res) => {
+            console.log(
+              `Response for sending the time spent on questions is ${res.data}`
+            );
+          });
+
+        window.location = "index.html";
+      },
+    },
+  });
+</script>
